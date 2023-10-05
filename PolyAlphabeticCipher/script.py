@@ -4,11 +4,13 @@ class PolyAlphabeticCipher:
 
     def clean_text(self, text):
         # Odstranění přebytečných znaků
+        # Remove unnecessary characters
         cleaned_text = ''.join(char.lower() for char in text if char.isalpha())
         return cleaned_text
 
     def transform(self, text, encrypt=True):
         # Šifrování a dešifrování textu
+        # Encrypting and decrypting text
         text = self.clean_text(text)
         result = []
 
@@ -16,9 +18,11 @@ class PolyAlphabeticCipher:
             shift = ord(self.key[i % len(self.key)]) - ord('a')
             if encrypt:
                 # Posun znaku
+                # Shift the character
                 transformed_char = chr(((ord(char) - ord('a') + shift) % 26) + ord('a'))
             else:
                 # Zpětný posun
+                # Reverse shift
                 transformed_char = chr(((ord(char) - ord('a') - shift) % 26) + ord('a'))
             result.append(transformed_char)
 
@@ -27,6 +31,7 @@ class PolyAlphabeticCipher:
 
 def encrypt_file(input_filename, output_filename, key):
     # Šifrování souboru
+    # Encrypting the file
     cipher = PolyAlphabeticCipher(key)
     with open(input_filename, "r", encoding="utf-8") as file:
         plaintext = file.read()
@@ -38,6 +43,7 @@ def encrypt_file(input_filename, output_filename, key):
 
 def decrypt_file(input_filename, output_filename, key):
     # Dešifrování souboru
+    # Decrypring the file
     cipher = PolyAlphabeticCipher(key)
     with open(input_filename, "r", encoding="utf-8") as file:
         ciphertext = file.read()
@@ -48,12 +54,16 @@ def decrypt_file(input_filename, output_filename, key):
 
 
 def main():
-    key = "ASDFGHJKLPOIUZTREWQYXCVBNM"  # Šifrovací klíč - random jsem mačkal písmena od A do Z
+    # Klíč
+    # Key
+    key = "ASDFGHJKLPOIUZTREWQYXCVBNM"
 
     # Šifrování
+    # Encryption
     encrypt_file("plaintext.txt", "encrypted.txt", key)
 
     # Dešifrování
+    # Decryption
     decrypt_file("encrypted.txt", "decrypted.txt", key)
 
 if __name__ == "__main__":
